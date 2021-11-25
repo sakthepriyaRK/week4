@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -76,7 +77,7 @@ System.out.println(Duke.size());
 
 for (WebElement webElement : Duke) {
 	String textduke=webElement.getText();
-	System.out.println(textduke);
+	//System.out.println(textduke);
 	if(!textduke.equals("Duke"))
 	{System.out.println("the brand is not duke");
 	}
@@ -98,7 +99,15 @@ System.out.println("Price of 1st item:"+Priceofirst);
 driver.findElement(By.xpath("//div[@class='product-sliderContainer']/following::div[@class='product-productMetaInfo']")).click();
 			
            //14) Click on WishList Now
-WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
+
+Set<String> allwindow = driver.getWindowHandles();
+System.out.println("allwindow:"+allwindow.size());
+List<String> windows=new ArrayList<String>(allwindow);
+String windownext = windows.get(1);
+String windowfirst = windows.get(0);
+driver.switchTo().window(windownext);
+Thread.sleep(2000);
+//WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
 
 driver.findElement(By.xpath("//span[text()='WISHLIST']")).click();
 //Thread.sleep(4000);

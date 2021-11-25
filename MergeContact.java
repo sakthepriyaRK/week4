@@ -1,6 +1,9 @@
 package week4.day2;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -44,21 +47,49 @@ public class MergeContact {
        driver.findElement(By.xpath("//img[@alt='Lookup']")).click();
        
 //		 * 8. Click on First Resulting Contact
-//driver.findElement(By.xpath("//div[@class='x-grid3-row']/td[@class='x-grid3-col x-grid3-cell x-grid3-td-partyId x-grid3-cell-first']/following::a[@class='linktext']")).click();
-    WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
-   //driver.findElement(By.xpath("//table[(contains(@class,'x-grid3-row-table')]/a)")).click();
+      Set<String> allwindow = driver.getWindowHandles();
+       System.out.println("allwindow:"+allwindow.size());
+       List<String> windows=new ArrayList<String>(allwindow);
+     String windownext = windows.get(1);
+   String windowfirst = windows.get(0);
+   driver.switchTo().window(windownext);
+   Thread.sleep(2000);
+  // driver.findElement(By.xpath("//div[@class='x-grid3-row']/td[@class='x-grid3-col x-grid3-cell x-grid3-td-partyId x-grid3-cell-first']/following::a[@class='linktext']")).click();
+    //WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
+   
+    //driver.findElement(By.xpath("//table[contains(@class,'x-grid3-row-table')]/a")).click();
 driver.findElement(By.xpath("//table[contains(@class,'x-grid3-row-table')]//td//a[@class='linktext']")).click();
-//driver.findElement(By.xpath("(//div[@class='x-grid3-cell-inner x-grid3-col-partyId']/a)[1]")).click();
-//		 * 9. Click on Widget of To Contact
-//		 * 
-//		 * 10. Click on Second Resulting Contact
-//		 * 
-//		 * 11. Click on Merge button using Xpath Locator
-//		 * 
-//		 * 12. Accept the Alert
-//		 * 
-//		 * 13. Verify the title of the page
 
+   // driver.findElement(By.xpath("(//div[@class='x-grid3-cell-inner x-grid3-col-partyId']/a)[1]")).click();
+
+ 
+//               	 * 9. Click on Widget of To Contact
+driver.switchTo().window(windowfirst);
+
+driver.findElement(By.xpath("//table[@class='twoColumnForm']//following::img[2]")).click();
+
+ //                      * 10. Click on Second Resulting Contact
+
+Set<String> allwindow2 = driver.getWindowHandles();
+System.out.println("allwindow2:"+allwindow2.size());
+List<String> windows2=new ArrayList<String>(allwindow2);
+String windownext2 = windows2.get(1);
+String windowfirst2 = windows2.get(0);
+driver.switchTo().window(windownext2);
+Thread.sleep(2000);
+driver.findElement(By.xpath("(//div[@class='x-grid3-cell-inner x-grid3-col-partyId']/a)[2]")).click();
+
+ //		 * 11. Click on Merge button using Xpath Locator
+driver.switchTo().window(windowfirst2);
+Thread.sleep(2000);
+driver.findElement(By.xpath("//a[text()='Merge']")).click();
+
+//		 * 12. Accept the Alert
+
+driver.switchTo().alert().accept();
+
+//		 * 13. Verify the title of the page
+System.out.println("Page title:"+driver.getTitle());
 	}
 
 }
